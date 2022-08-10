@@ -13,6 +13,10 @@ class CoinsInfoListHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet private weak var middleLabelXCenterConstraint: NSLayoutConstraint!
     @IBOutlet private weak var middleLabel: UILabel!
     
+    // MARK: Public Properties
+    
+    static let reusieIdentifier = "CoinsInfoListHeaderFooterView"
+    
     // MARK: - View Life Cycle
     
     override func layoutSubviews() {

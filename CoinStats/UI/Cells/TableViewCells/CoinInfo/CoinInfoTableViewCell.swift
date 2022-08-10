@@ -22,6 +22,10 @@ class CoinInfoTableViewCell: UITableViewCell {
     @IBOutlet private weak var priceInUsdLabel: UILabel!
     @IBOutlet private weak var rankLabel: UILabel!
     
+    // MARK: - Public Properties
+    
+    static let reuseIdentifier = "CoinInfoTableViewCell"
+
     // MARK: - Private Properties
     
     private var reusableBag = DisposeBag()

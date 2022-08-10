@@ -16,6 +16,7 @@ class CoinsInfoListViewModel {
 
     // MARK: - Output
     
+    let isLoading = BehaviorRelay<Bool>(value: false)
     let coinInfoCellsViewModels = BehaviorRelay<[CoinInfoCellViewModel]?>(value: nil)
     let error = BehaviorRelay<Error?>(value: nil)
     
@@ -63,6 +64,8 @@ class CoinsInfoListViewModel {
     }
     
     @objc private func updateDataHandler() {
+        isLoading.accept(true)
+        
         if let initialCoins = coinsData.value {
             CoinDataManager
                 .shared
@@ -74,9 +77,12 @@ class CoinsInfoListViewModel {
                         // This code will be executed only once during this class instance liftime,
                         // and this is the place to setup the data updater timer
                         self?.setupUpdateDataTimer()
+                        
+                        self?.isLoading.accept(false)
                     },
                     onError: { [weak self] (error) in
                         self?.error.accept(error)
+                        self?.isLoading.accept(false)
                     }
                 )
                 .disposed(by: bag)
@@ -88,9 +94,11 @@ class CoinsInfoListViewModel {
                 .subscribe(
                     onNext: { [weak self] (coins) in
                         self?.coinsData.accept(coins)
+                        self?.isLoading.accept(false)
                     },
                     onError: { [weak self] (error) in
                         self?.error.accept(error)
+                        self?.isLoading.accept(false)
                     }
                 )
                 .disposed(by: bag)
