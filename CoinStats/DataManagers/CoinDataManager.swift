@@ -52,6 +52,7 @@ class CoinDataManager {
                     httpMethod: .get,
                     queryParametrs: strongSelf.getRequestParams(for: .allCoinsInitialData),
                     httpHeaders: strongSelf.getRequestHeaders(for: .allCoinsInitialData))
+                .observe(on: SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                     onNext: { (networkResponse) in
                         guard let data = strongSelf.parseDictionary(from: networkResponse),
@@ -88,6 +89,7 @@ class CoinDataManager {
                     httpMethod: .get,
                     queryParametrs: strongSelf.getRequestParams(for: .allCoinsUpdateData),
                     httpHeaders: strongSelf.getRequestHeaders(for: .allCoinsUpdateData))
+                .observe(on: SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                     onNext: { (networkResponse) in
                         guard let data = strongSelf.parseDictionary(from: networkResponse),

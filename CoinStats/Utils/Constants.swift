@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 struct Constants {
     enum APIEndpoint: String {
@@ -25,4 +26,5 @@ struct Constants {
     }
     
     static let requestJsonHeaders = ["Content-Type": "application/json","Accept": "application/json"]
+    static let middleRowLeadingPositionPortion: CGFloat = 178 / 343
 }
