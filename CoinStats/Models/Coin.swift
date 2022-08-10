@@ -28,17 +28,17 @@ struct Coin: Codable {
     // MARK: - Public Properties
     
     let id: String
-    let rank: Int
-    let priceInUsd: Int
-    let priceInBtc: Int
-    let volumeUsedInLast24Hours: Int
+    let rank: Double
+    let priceInUsd: Double
+    let priceInBtc: Double
+    let volumeUsedInLast24Hours: Double
     let name: String
     let symbol: String
     let iconUrl: String
-    let marketCapInUsd: Int
-    let percentChangeFor1H: Int
-    let percentChangeFor24H: Int
-    let percentChangeFor7Days: Int
+    let marketCapInUsd: Double
+    let percentChangeFor1H: Double
+    let percentChangeFor24H: Double
+    let percentChangeFor7Days: Double
     
     // MARK: - Initializers
     
@@ -46,36 +46,49 @@ struct Coin: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try values.decode(String.self, forKey: .id)
-        rank = try values.decode(Int.self, forKey: .rank)
-        priceInUsd = try values.decode(Int.self, forKey: .priceInUsd)
-        priceInBtc = try values.decode(Int.self, forKey: .priceInBtc)
-        volumeUsedInLast24Hours = try values.decode(Int.self, forKey: .volumeUsedInLast24Hours)
+        rank = try values.decode(Double.self, forKey: .rank)
+        priceInUsd = try values.decode(Double.self, forKey: .priceInUsd)
+        priceInBtc = try values.decode(Double.self, forKey: .priceInBtc)
+        volumeUsedInLast24Hours = try values.decode(Double.self, forKey: .volumeUsedInLast24Hours)
         name = try values.decode(String.self, forKey: .name)
         symbol = try values.decode(String.self, forKey: .symbol)
         iconUrl = try values.decode(String.self, forKey: .iconUrl)
-        marketCapInUsd = try values.decode(Int.self, forKey: .marketCapInUsd)
-        percentChangeFor1H = try values.decode(Int.self, forKey: .percentChangeFor1H)
-        percentChangeFor24H = try values.decode(Int.self, forKey: .percentChangeFor24H)
-        percentChangeFor7Days = try values.decode(Int.self, forKey: .percentChangeFor7Days)
+        marketCapInUsd = try values.decode(Double.self, forKey: .marketCapInUsd)
+        percentChangeFor1H = try values.decode(Double.self, forKey: .percentChangeFor1H)
+        percentChangeFor24H = try values.decode(Double.self, forKey: .percentChangeFor24H)
+        percentChangeFor7Days = try values.decode(Double.self, forKey: .percentChangeFor7Days)
     }
     
-    init?(from updatedDataArray:[Any],and previousObject: Coin) {
+    init?(from updatedDataArray:[Any],and previousObjects: [Coin]) {
         guard   updatedDataArray.count > 8,
                 let id = updatedDataArray[0] as? String,
-                let rank = updatedDataArray[1] as? Int,
-                let priceInUsd = updatedDataArray[2] as? Int,
-                let priceInBtc = updatedDataArray[3] as? Int,
-                let volumeUsedInLast24Hours = updatedDataArray[4] as? Int,
-                let marketCapInUsd = updatedDataArray[5] as? Int,
-                let percentChangeFor1H = updatedDataArray[6] as? Int,
-                let percentChangeFor24H = updatedDataArray[7] as? Int,
-                let percentChangeFor7Days = updatedDataArray[7] as? Int else {
+                let rank = updatedDataArray[1] as? Double,
+                let priceInUsd = updatedDataArray[2] as? Double,
+                let priceInBtc = updatedDataArray[3] as? Double,
+                let volumeUsedInLast24Hours = updatedDataArray[4] as? Double,
+                let marketCapInUsd = updatedDataArray[5] as? Double,
+                let percentChangeFor1H = updatedDataArray[6] as? Double,
+                let percentChangeFor24H = updatedDataArray[7] as? Double,
+                let percentChangeFor7Days = updatedDataArray[7] as? Double else {
             return nil
         }
 
-        self.name = previousObject.name
-        self.iconUrl = previousObject.iconUrl
-        self.symbol = previousObject.symbol
+        // Trying to get the same previous coin
+        var previousSameCoin: Coin?
+        for previousCoin in previousObjects {
+            if (id == previousCoin.id) {
+                previousSameCoin = previousCoin
+            }
+        }
+        
+        // Checking the previous same coin to not be nil
+        if previousSameCoin == nil {
+            return nil
+        }
+        
+        self.name = previousSameCoin!.name
+        self.iconUrl = previousSameCoin!.iconUrl
+        self.symbol = previousSameCoin!.symbol
         self.id = id
         self.rank = rank
         self.priceInUsd = priceInUsd

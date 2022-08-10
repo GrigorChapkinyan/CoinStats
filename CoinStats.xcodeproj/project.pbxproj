@@ -17,6 +17,8 @@
 		385B25F128A2DD2000F14061 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B25F028A2DD2000F14061 /* Coin.swift */; };
 		385B25F428A2E03100F14061 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B25F328A2E03100F14061 /* Constants.swift */; };
 		385B25F928A2E9C300F14061 /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B25F828A2E9C300F14061 /* RootNavigationController.swift */; };
+		385B25FB28A2EF0400F14061 /* CoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B25FA28A2EF0400F14061 /* CoinDataManager.swift */; };
+		385B25FD28A2F46600F14061 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B25FC28A2F46600F14061 /* Dictionary+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		385B25F028A2DD2000F14061 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		385B25F328A2E03100F14061 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		385B25F828A2E9C300F14061 /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
+		385B25FA28A2EF0400F14061 /* CoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataManager.swift; sourceTree = "<group>"; };
+		385B25FC28A2F46600F14061 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		4AB77D8C7BF9A858D9640DEA /* Pods_CoinStats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinStats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E819D8325FBDA930BAC30174 /* Pods-CoinStats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinStats.release.xcconfig"; path = "Target Support Files/Pods-CoinStats/Pods-CoinStats.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				385B25F328A2E03100F14061 /* Constants.swift */,
+				385B25FC28A2F46600F14061 /* Dictionary+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 		385B25F628A2E86700F14061 /* DataManagers */ = {
 			isa = PBXGroup;
 			children = (
+				385B25FA28A2EF0400F14061 /* CoinDataManager.swift */,
 			);
 			path = DataManagers;
 			sourceTree = "<group>";
@@ -271,6 +277,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385B25FB28A2EF0400F14061 /* CoinDataManager.swift in Sources */,
+				385B25FD28A2F46600F14061 /* Dictionary+Ext.swift in Sources */,
 				385B25F428A2E03100F14061 /* Constants.swift in Sources */,
 				384BE4A428A2C7FA00570C02 /* ViewController.swift in Sources */,
 				385B25EF28A2DB1000F14061 /* NetworkService.swift in Sources */,

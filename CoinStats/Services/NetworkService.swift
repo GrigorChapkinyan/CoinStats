@@ -8,34 +8,46 @@
 import Foundation
 import RxSwift
 
-enum HttpMethod: String {
-    case get = "GET"
-    case post = "POST"
-    case delete = "DELETE"
-    case put = "PUT"
-}
-
-enum HttpRequestError: Error {
-    case unauthorize
-    case serverError
-    case invalidData
-    case noInternetConnection
-    case requestBodyIncorrect
-    case unknown
-}
-
-typealias NetworkResponse = (data: Data?,headers: [AnyHashable : Any])
-
 class NetworkService {
-    func sendHttpRequest(urlString: String,httpMethod: HttpMethod,queryParametrs: [String:String]? = nil,httpHeaders: [String:String]? = nil,body: [String:Any]? = nil) -> Observable<NetworkResponse> {
-        return Observable.create { [weak self] (observer) -> Disposable in
+    // MARK: - Nested Types
+    
+    enum Method: String {
+        case get = "GET"
+        case post = "POST"
+        case delete = "DELETE"
+        case put = "PUT"
+    }
+
+    enum Error: Swift.Error {
+        case unauthorize
+        case serverError
+        case invalidData
+        case noInternetConnection
+        case requestBodyIncorrect
+        case unknown
+    }
+    
+    typealias Response = (data: Data?,headers: [AnyHashable : Any])
+    
+    // MARK: - Public Properties
+    
+    static let shared: NetworkService = NetworkService()
+
+    // MARK: - Initializers
+    
+    private init() {}
+    
+    // MARK: - Public API
+    
+    func sendHttpRequest(urlString: String,httpMethod: Method,queryParametrs: [String:String]? = nil,httpHeaders: [String:String]? = nil,body: [String:Any]? = nil) -> Observable<Response> {
+        return Observable.create { (observer) -> Disposable in
             var urlComponents = URLComponents(string: urlString)
-            self?.configureQueryParams(urlComponents: &urlComponents, queryParametrs: queryParametrs)
+            self.configureQueryParams(urlComponents: &urlComponents, queryParametrs: queryParametrs)
             
-            guard let url = urlComponents?.url else { observer.onError(HttpRequestError.requestBodyIncorrect); return Disposables.create() }
+            guard let url = urlComponents?.url else { observer.onError(NetworkService.Error.requestBodyIncorrect); return Disposables.create() }
             
             var request = URLRequest(url: url)
-            self?.configureHeaderFields(request: &request, headers: httpHeaders)
+            self.configureHeaderFields(request: &request, headers: httpHeaders)
             
             request.httpMethod = httpMethod.rawValue
             
@@ -48,7 +60,7 @@ class NetworkService {
                 guard error == nil else {
                     if  let nsError = error as NSError?,
                         nsError.code == NSURLErrorNotConnectedToInternet {
-                        observer.onError(HttpRequestError.noInternetConnection)
+                        observer.onError(NetworkService.Error.noInternetConnection)
                     }
                     else {
                         observer.onError(error!)
@@ -58,14 +70,14 @@ class NetworkService {
                 
                 guard   let httpResponse = response as? HTTPURLResponse,
                         200...300 ~= httpResponse.statusCode else {
-                    self?.handleResponseNotValidStatusCode(observer: observer, response: response)
+                    self.handleResponseNotValidStatusCode(observer: observer, response: response)
                     
                     return
                 }
                 
-                let headers = self?.allHeadersFromResponse(response: response) ?? [ : ]
+                let headers = self.allHeadersFromResponse(response: response)
                 
-                observer.onNext(NetworkResponse(data: data,headers: headers))
+                observer.onNext(Response(data: data,headers: headers))
                 observer.onCompleted()
             }
             
@@ -78,7 +90,7 @@ class NetworkService {
         .observe(on: MainScheduler.instance)
     }
     
-    // MARK: Helpers
+    // MARK: - Private API
 
     private func configureHeaderFields(request: inout URLRequest,headers: [String:String]?) {
         guard let headers = headers else { return }
@@ -110,24 +122,24 @@ class NetworkService {
         }
     }
     
-    private func handleResponseNotValidStatusCode(observer: AnyObserver<NetworkResponse>,response: URLResponse?) {
+    private func handleResponseNotValidStatusCode(observer: AnyObserver<Response>,response: URLResponse?) {
         if let httpResponse = response as? HTTPURLResponse {
             print(httpResponse.statusCode)
             if httpResponse.statusCode == 401 {
-                observer.onError(HttpRequestError.unauthorize)
+                observer.onError(Error.unauthorize)
             }
             else if (400..<500 ~= httpResponse.statusCode) {
-                observer.onError(HttpRequestError.invalidData)
+                observer.onError(NetworkService.Error.invalidData)
             }
             else if (500...600 ~= httpResponse.statusCode) || (httpResponse.statusCode == 404) {
-                observer.onError(HttpRequestError.serverError)
+                observer.onError(NetworkService.Error.serverError)
             }
             else {
-                observer.onError(HttpRequestError.unknown)
+                observer.onError(NetworkService.Error.unknown)
             }
         }
         else {
-            observer.onError(HttpRequestError.unknown)
+            observer.onError(NetworkService.Error.unknown)
         }
     }
 }

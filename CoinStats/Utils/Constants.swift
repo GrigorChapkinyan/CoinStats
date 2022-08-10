@@ -19,4 +19,10 @@ struct Constants {
         
         case coins = "/coins"
     }
+    
+    enum HttpBodyKeys: String {
+        case coins = "coins"
+    }
+    
+    static let requestJsonHeaders = ["Content-Type": "application/json","Accept": "application/json"]
 }
