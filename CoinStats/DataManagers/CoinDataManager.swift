@@ -72,7 +72,7 @@ class CoinDataManager {
             
             return Disposables.create {}
         }
-        .observe(on: MainScheduler.instance)
+        .observe(on: MainScheduler.asyncInstance)
     }
     
     func fetchAndUpdateAllCoinsData(with previousCoins: [Coin]) -> Observable<[Coin]> {
@@ -109,7 +109,7 @@ class CoinDataManager {
             
             return Disposables.create {}
         }
-        .observe(on: MainScheduler.instance)
+        .observe(on: MainScheduler.asyncInstance)
     }
     
     // MARK: - Private API

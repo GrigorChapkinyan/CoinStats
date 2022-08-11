@@ -25,6 +25,22 @@ struct Constants {
         case coins = "coins"
     }
     
+    enum CryptoPricePresentationType {
+        case usd
+        case btc
+    }
+    
+    enum ColorNames: String {
+        case lightRed = "lightRed"
+        case darkRed = "darkRed"
+        case lightGreen = "lightGreen"
+        case darkGreen = "darkGreen"
+        case gray1 = "gray1"
+        case gray2 = "gray2"
+        case gray3 = "gray3"
+        case gray4 = "gray4"
+        case gray5 = "gray5"
+    }
+    
     static let requestJsonHeaders = ["Content-Type": "application/json","Accept": "application/json"]
-    static let middleRowLeadingPositionPortion: CGFloat = 178 / 343
 }

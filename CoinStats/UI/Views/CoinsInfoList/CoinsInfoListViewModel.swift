@@ -13,6 +13,7 @@ class CoinsInfoListViewModel {
     
     let updateDataObservable = PublishRelay<Void>()
     let searchPhrase = BehaviorRelay<String?>(value: nil)
+    let priceType = BehaviorRelay<Constants.CryptoPricePresentationType>(value: .usd)
 
     // MARK: - Output
     
@@ -23,6 +24,7 @@ class CoinsInfoListViewModel {
     // MARK: - Private Properties
     
     private let bag = DisposeBag()
+    private var cellViewModelsReuseableBug = DisposeBag()
     private var updateDataTimer: Timer?
     private let coinsData = BehaviorRelay<[Coin]?>(value: nil)
     
@@ -61,6 +63,12 @@ class CoinsInfoListViewModel {
             .map({ $0.map({ CoinInfoCellViewModel(with: $0) }) })
             .bind(to: coinInfoCellsViewModels)
             .disposed(by: bag)
+        
+        coinInfoCellsViewModels
+            .subscribe(onNext: { [weak self] (viewModels) in
+                self?.resetCellViewModelsBindings()
+            })
+            .disposed(by: bag)
     }
     
     @objc private func updateDataHandler() {
@@ -73,11 +81,6 @@ class CoinsInfoListViewModel {
                 .subscribe(
                     onNext: { [weak self] (coins) in
                         self?.coinsData.accept(coins)
-                        
-                        // This code will be executed only once during this class instance liftime,
-                        // and this is the place to setup the data updater timer
-                        self?.setupUpdateDataTimer()
-                        
                         self?.isLoading.accept(false)
                     },
                     onError: { [weak self] (error) in
@@ -95,6 +98,10 @@ class CoinsInfoListViewModel {
                     onNext: { [weak self] (coins) in
                         self?.coinsData.accept(coins)
                         self?.isLoading.accept(false)
+                        
+                        // This code will be executed only once during this class instance liftime,
+                        // and this is the place to setup the data updater timer
+                        self?.setupUpdateDataTimer()
                     },
                     onError: { [weak self] (error) in
                         self?.error.accept(error)
@@ -106,8 +113,9 @@ class CoinsInfoListViewModel {
     }
     
     private func setupUpdateDataTimer() {
-        updateDataTimer?.invalidate()
-        updateDataTimer = Timer(timeInterval: 5, target: self, selector: #selector(updateDataHandler), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
+            self?.updateDataHandler()
+        }
     }
     
     private func getFilteredCoins(allCoins: [Coin], searchPhrase: String?) -> [Coin] {
@@ -117,5 +125,19 @@ class CoinsInfoListViewModel {
         }
         
         return allCoins.filter({ $0.name.contains(searchPhrase) })
+    }
+    
+    private func resetCellViewModelsBindings() {
+        cellViewModelsReuseableBug = DisposeBag()
+        
+        guard let coinInfoCellsViewModels = coinInfoCellsViewModels.value else {
+            return
+        }
+        
+        for cellViewModelter in coinInfoCellsViewModels {
+            priceType
+                .bind(to: cellViewModelter.priceType)
+                .disposed(by: cellViewModelsReuseableBug)
+        }
     }
 }

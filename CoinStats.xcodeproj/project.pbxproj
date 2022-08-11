@@ -25,6 +25,7 @@
 		385B260D28A3623D00F14061 /* CoinInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 385B260B28A3623D00F14061 /* CoinInfoTableViewCell.xib */; };
 		385B260F28A3625400F14061 /* CoinInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B260E28A3625400F14061 /* CoinInfoCellViewModel.swift */; };
 		385B261228A41C6200F14061 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B261128A41C6200F14061 /* HomeViewController.swift */; };
+		385B261428A41DFD00F14061 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B261328A41DFD00F14061 /* HomeViewModel.swift */; };
 		38A5088428A389B9008B936F /* NSLayoutconstraint+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088328A389B9008B936F /* NSLayoutconstraint+Ext.swift */; };
 		38A5088C28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088B28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift */; };
 		38A5088E28A38C35008B936F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088D28A38C35008B936F /* Utils.swift */; };
@@ -53,6 +54,7 @@
 		385B260B28A3623D00F14061 /* CoinInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinInfoTableViewCell.xib; sourceTree = "<group>"; };
 		385B260E28A3625400F14061 /* CoinInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinInfoCellViewModel.swift; sourceTree = "<group>"; };
 		385B261128A41C6200F14061 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		385B261328A41DFD00F14061 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		38A5088328A389B9008B936F /* NSLayoutconstraint+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutconstraint+Ext.swift"; sourceTree = "<group>"; };
 		38A5088B28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsInfoListHeaderFooterView.swift; sourceTree = "<group>"; };
 		38A5088D28A38C35008B936F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				385B261128A41C6200F14061 /* HomeViewController.swift */,
+				385B261328A41DFD00F14061 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385B261428A41DFD00F14061 /* HomeViewModel.swift in Sources */,
 				38A5089228A3DCB8008B936F /* UIView+Ext.swift in Sources */,
 				385B25FB28A2EF0400F14061 /* CoinDataManager.swift in Sources */,
 				38A5088428A389B9008B936F /* NSLayoutconstraint+Ext.swift in Sources */,

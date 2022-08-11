@@ -87,7 +87,7 @@ class NetworkService {
                 dataTask.cancel()
             }
         }
-        .observe(on: MainScheduler.instance)
+        .observe(on: MainScheduler.asyncInstance)
     }
     
     // MARK: - Private API

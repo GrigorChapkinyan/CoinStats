@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,19 +17,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQx-oc-nis">
-                    <rect key="frame" x="0.0" y="44" width="29.5" height="58"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <nil key="textColor"/>
+                    <rect key="frame" x="0.0" y="44" width="31" height="58"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                    <color key="textColor" name="gray2"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f17-GF-EbX">
-                    <rect key="frame" x="168.5" y="44" width="25.5" height="58"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <nil key="textColor"/>
+                    <rect key="frame" x="183.5" y="44" width="26.5" height="58"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                    <color key="textColor" name="gray2"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntf-KU-Ihd">
-                    <rect key="frame" x="302.5" y="44" width="59.5" height="58"/>
+                    <rect key="frame" x="301" y="44" width="61" height="58"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WmJ-Q6-bOa">
                             <rect key="frame" x="0.0" y="0.0" width="17" height="58"/>
@@ -37,13 +38,12 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zcp-Vm-rYc">
-                            <rect key="frame" x="26.5" y="20.5" width="33" height="17"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
+                            <rect key="frame" x="26.5" y="20.5" width="34.5" height="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                            <color key="textColor" name="gray5"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGrayColor"/>
                     <constraints>
                         <constraint firstItem="Zcp-Vm-rYc" firstAttribute="centerY" secondItem="Ntf-KU-Ihd" secondAttribute="centerY" id="0q7-6i-7fo"/>
                         <constraint firstAttribute="bottom" secondItem="WmJ-Q6-bOa" secondAttribute="bottom" id="84d-zG-8uA"/>
@@ -67,7 +67,7 @@
                 <constraint firstItem="aQx-oc-nis" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="jk5-8f-2rW"/>
                 <constraint firstItem="f17-GF-EbX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aQx-oc-nis" secondAttribute="trailing" constant="20" id="mCK-nM-L9t"/>
                 <constraint firstItem="Ntf-KU-Ihd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f17-GF-EbX" secondAttribute="trailing" constant="20" id="nGZ-iB-ppf"/>
-                <constraint firstItem="f17-GF-EbX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xiw-jI-kam"/>
+                <constraint firstItem="f17-GF-EbX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.015" id="xiw-jI-kam"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -78,11 +78,14 @@
         </view>
     </objects>
     <resources>
+        <namedColor name="gray2">
+            <color red="0.40000003576278687" green="0.40000003576278687" blue="0.40000003576278687" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray5">
+            <color red="0.20000001788139343" green="0.20000001788139343" blue="0.20000001788139343" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

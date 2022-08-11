@@ -67,7 +67,14 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: - UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.bounds.width * (51 / 343)
+    }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return self.bounds.width * (1 / 8)
+    }
     
     // MARK: - Private API
     
@@ -85,7 +92,7 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
 
         viewModel
             .coinInfoCellsViewModels
-            .observe(on: MainScheduler.instance)
+            .observe(on: MainScheduler.asyncInstance)
             .subscribe { [weak self] (rank) in
                 self?.tableView.reloadData()
             }
@@ -95,7 +102,7 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
     private func configureUIInitialState() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(CoinInfoTableViewCell.self, forCellReuseIdentifier: CoinInfoTableViewCell.reuseIdentifier)
-        tableView.register(CoinsInfoListHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: CoinsInfoListHeaderFooterView.reusieIdentifier)
+        tableView.register(UINib(nibName: CoinInfoTableViewCell.nibFileName, bundle: nil), forCellReuseIdentifier: CoinInfoTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: CoinsInfoListHeaderFooterView.nibFileName, bundle: nil), forHeaderFooterViewReuseIdentifier: CoinsInfoListHeaderFooterView.reusieIdentifier)
     }
 }
