@@ -20,9 +20,10 @@ class CoinInfoCellViewModel {
     let name = BehaviorRelay<String?>(value: nil)
     let symbol = BehaviorRelay<String?>(value: nil)
     let iconUrl = BehaviorRelay<String?>(value: nil)
-    let percentChangeFor24H = BehaviorRelay<Double?>(value: nil)
+    let percentChangeFor24H = BehaviorRelay<String?>(value: nil)
     let middleViewBGColorName = BehaviorRelay<Constants.ColorNames?>(value: nil)
     let middleViewSubviewsBGColorName = BehaviorRelay<Constants.ColorNames?>(value: nil)
+    let arrowImageName = BehaviorRelay<Constants.ImageAssetNames?>(value: nil)
 
     // MARK: - Private Properties
     
@@ -47,13 +48,18 @@ class CoinInfoCellViewModel {
         emmitCorrectPriceValue()
         
         let correctPercentChangeFor24H = Utils.changeDoublePrecision(initialDouble: coin.percentChangeFor24H, precision: 2)
-        percentChangeFor24H.accept(abs(correctPercentChangeFor24H))
+        let percentChangeStrInitial = String(abs(correctPercentChangeFor24H)) + "%"
+        let percentChangeStrFinal = String(percentChangeStrInitial.prefix(6)).replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
+        percentChangeFor24H.accept(percentChangeStrFinal)
         
         let middleViewBGColorName: Constants.ColorNames = (correctPercentChangeFor24H < 0) ? .lightRed : .lightGreen
         self.middleViewBGColorName.accept(middleViewBGColorName)
         
         let middleViewSubviewsBGColorName: Constants.ColorNames = (correctPercentChangeFor24H < 0) ? .darkRed : .darkGreen
         self.middleViewSubviewsBGColorName.accept(middleViewSubviewsBGColorName)
+        
+        let arrowImageName: Constants.ImageAssetNames = (correctPercentChangeFor24H < 0) ? .arrowDown : .arrowUp
+        self.arrowImageName.accept(arrowImageName)
     }
     
     private func emmitCorrectPriceValue() {
@@ -70,7 +76,7 @@ class CoinInfoCellViewModel {
                 priceSymbol = "Ƀ"
         }
         
-        let priceStr = String((priceSymbol + String(format: "%.8f",priceDigit)).prefix(10))
+        let priceStr = String((priceSymbol + String(format: "%.8g",priceDigit)).prefix(10))
         self.priceStr.accept(priceStr)
     }
     

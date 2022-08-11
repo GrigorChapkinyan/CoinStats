@@ -10,9 +10,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CoinsInfoListHeaderView" customModule="CoinStats" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="8lF-ag-Lun"/>
+                <outlet property="priceSortingBtn" destination="AFA-Y5-DE1" id="63t-y6-rvy"/>
+                <outlet property="priceSortingImageView" destination="WmJ-Q6-bOa" id="GBN-u4-klC"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CoinsInfoListHeaderFooterView" customModule="CoinStats" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="362" height="102"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -29,16 +35,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntf-KU-Ihd">
-                    <rect key="frame" x="301" y="44" width="61" height="58"/>
+                    <rect key="frame" x="306.5" y="44" width="55.5" height="58"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFA-Y5-DE1">
+                            <rect key="frame" x="0.0" y="0.0" width="55.5" height="58"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WmJ-Q6-bOa">
-                            <rect key="frame" x="0.0" y="0.0" width="17" height="58"/>
+                            <rect key="frame" x="0.0" y="6" width="11.5" height="46"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="WmJ-Q6-bOa" secondAttribute="height" multiplier="6:20" id="uvA-cH-LBV"/>
+                                <constraint firstAttribute="width" secondItem="WmJ-Q6-bOa" secondAttribute="height" multiplier="5:20" id="uvA-cH-LBV"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zcp-Vm-rYc">
-                            <rect key="frame" x="26.5" y="20.5" width="34.5" height="17"/>
+                            <rect key="frame" x="21" y="20.5" width="34.5" height="17"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                             <color key="textColor" name="gray5"/>
                             <nil key="highlightedColor"/>
@@ -46,11 +56,15 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="Zcp-Vm-rYc" firstAttribute="centerY" secondItem="Ntf-KU-Ihd" secondAttribute="centerY" id="0q7-6i-7fo"/>
-                        <constraint firstAttribute="bottom" secondItem="WmJ-Q6-bOa" secondAttribute="bottom" id="84d-zG-8uA"/>
                         <constraint firstItem="Zcp-Vm-rYc" firstAttribute="leading" secondItem="WmJ-Q6-bOa" secondAttribute="trailing" constant="9.3000000000000007" id="GDC-S1-kGU"/>
+                        <constraint firstItem="WmJ-Q6-bOa" firstAttribute="height" secondItem="Ntf-KU-Ihd" secondAttribute="height" multiplier="0.8" id="Hjd-Hu-esk"/>
                         <constraint firstItem="WmJ-Q6-bOa" firstAttribute="leading" secondItem="Ntf-KU-Ihd" secondAttribute="leading" id="HqL-ne-Evn"/>
                         <constraint firstAttribute="trailing" secondItem="Zcp-Vm-rYc" secondAttribute="trailing" id="QTw-jE-TW4"/>
-                        <constraint firstItem="WmJ-Q6-bOa" firstAttribute="top" secondItem="Ntf-KU-Ihd" secondAttribute="top" id="bzT-2k-9C1"/>
+                        <constraint firstItem="AFA-Y5-DE1" firstAttribute="centerX" secondItem="Ntf-KU-Ihd" secondAttribute="centerX" id="X7W-pF-PZP"/>
+                        <constraint firstItem="WmJ-Q6-bOa" firstAttribute="centerY" secondItem="Ntf-KU-Ihd" secondAttribute="centerY" id="bMQ-36-vUi"/>
+                        <constraint firstItem="AFA-Y5-DE1" firstAttribute="height" secondItem="Ntf-KU-Ihd" secondAttribute="height" id="jDX-si-aPi"/>
+                        <constraint firstItem="AFA-Y5-DE1" firstAttribute="width" secondItem="Ntf-KU-Ihd" secondAttribute="width" id="mjz-Ez-nJn"/>
+                        <constraint firstItem="AFA-Y5-DE1" firstAttribute="centerY" secondItem="Ntf-KU-Ihd" secondAttribute="centerY" id="n7X-YK-IJH"/>
                     </constraints>
                 </view>
             </subviews>
@@ -70,10 +84,6 @@
                 <constraint firstItem="f17-GF-EbX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.015" id="xiw-jI-kam"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="middleLabel" destination="f17-GF-EbX" id="AGa-yP-pSS"/>
-                <outlet property="middleLabelXCenterConstraint" destination="xiw-jI-kam" id="6Bx-qE-bvN"/>
-            </connections>
             <point key="canvasLocation" x="-137.68115942028987" y="-152.00892857142856"/>
         </view>
     </objects>

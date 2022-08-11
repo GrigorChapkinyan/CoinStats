@@ -30,6 +30,14 @@ struct Constants {
         case btc
     }
     
+    enum ImageAssetNames: String {
+        case searchIcon = "searchIcon"
+        case sortIconDown = "sortIconDown"
+        case sortIconUp = "sortIconUp"
+        case arrowDown = "arrowDown"
+        case arrowUp = "arrowUp"
+    }
+    
     enum ColorNames: String {
         case lightRed = "lightRed"
         case darkRed = "darkRed"

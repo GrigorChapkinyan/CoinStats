@@ -26,10 +26,11 @@
 		385B260F28A3625400F14061 /* CoinInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B260E28A3625400F14061 /* CoinInfoCellViewModel.swift */; };
 		385B261228A41C6200F14061 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B261128A41C6200F14061 /* HomeViewController.swift */; };
 		385B261428A41DFD00F14061 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B261328A41DFD00F14061 /* HomeViewModel.swift */; };
+		3886CE4428A5253D008317D0 /* CoinsInfoListHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3886CE4328A5253D008317D0 /* CoinsInfoListHeaderViewModel.swift */; };
 		38A5088428A389B9008B936F /* NSLayoutconstraint+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088328A389B9008B936F /* NSLayoutconstraint+Ext.swift */; };
-		38A5088C28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088B28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift */; };
+		38A5088C28A38BB8008B936F /* CoinsInfoListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088B28A38BB8008B936F /* CoinsInfoListHeaderView.swift */; };
 		38A5088E28A38C35008B936F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5088D28A38C35008B936F /* Utils.swift */; };
-		38A5089028A38F52008B936F /* CoinsInfoListHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5088F28A38F52008B936F /* CoinsInfoListHeaderFooterView.xib */; };
+		38A5089028A38F52008B936F /* CoinsInfoListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5088F28A38F52008B936F /* CoinsInfoListHeaderView.xib */; };
 		38A5089228A3DCB8008B936F /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5089128A3DCB8008B936F /* UIView+Ext.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,10 +56,11 @@
 		385B260E28A3625400F14061 /* CoinInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinInfoCellViewModel.swift; sourceTree = "<group>"; };
 		385B261128A41C6200F14061 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		385B261328A41DFD00F14061 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3886CE4328A5253D008317D0 /* CoinsInfoListHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsInfoListHeaderViewModel.swift; sourceTree = "<group>"; };
 		38A5088328A389B9008B936F /* NSLayoutconstraint+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutconstraint+Ext.swift"; sourceTree = "<group>"; };
-		38A5088B28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsInfoListHeaderFooterView.swift; sourceTree = "<group>"; };
+		38A5088B28A38BB8008B936F /* CoinsInfoListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsInfoListHeaderView.swift; sourceTree = "<group>"; };
 		38A5088D28A38C35008B936F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		38A5088F28A38F52008B936F /* CoinsInfoListHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinsInfoListHeaderFooterView.xib; sourceTree = "<group>"; };
+		38A5088F28A38F52008B936F /* CoinsInfoListHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinsInfoListHeaderView.xib; sourceTree = "<group>"; };
 		38A5089128A3DCB8008B936F /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		4AB77D8C7BF9A858D9640DEA /* Pods_CoinStats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinStats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E819D8325FBDA930BAC30174 /* Pods-CoinStats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinStats.release.xcconfig"; path = "Target Support Files/Pods-CoinStats/Pods-CoinStats.release.xcconfig"; sourceTree = "<group>"; };
@@ -253,8 +255,9 @@
 		38A5088628A38B40008B936F /* CoinsInfoList */ = {
 			isa = PBXGroup;
 			children = (
-				38A5088B28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift */,
-				38A5088F28A38F52008B936F /* CoinsInfoListHeaderFooterView.xib */,
+				38A5088B28A38BB8008B936F /* CoinsInfoListHeaderView.swift */,
+				38A5088F28A38F52008B936F /* CoinsInfoListHeaderView.xib */,
+				3886CE4328A5253D008317D0 /* CoinsInfoListHeaderViewModel.swift */,
 			);
 			path = CoinsInfoList;
 			sourceTree = "<group>";
@@ -340,7 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				385B260D28A3623D00F14061 /* CoinInfoTableViewCell.xib in Resources */,
-				38A5089028A38F52008B936F /* CoinsInfoListHeaderFooterView.xib in Resources */,
+				38A5089028A38F52008B936F /* CoinsInfoListHeaderView.xib in Resources */,
 				384BE4AC28A2C7FB00570C02 /* LaunchScreen.storyboard in Resources */,
 				385B260228A35E8E00F14061 /* CoinsInfoListView.xib in Resources */,
 				384BE4A928A2C7FB00570C02 /* Assets.xcassets in Resources */,
@@ -406,9 +409,10 @@
 				385B260C28A3623D00F14061 /* CoinInfoTableViewCell.swift in Sources */,
 				385B25FD28A2F46600F14061 /* Dictionary+Ext.swift in Sources */,
 				38A5088E28A38C35008B936F /* Utils.swift in Sources */,
+				3886CE4428A5253D008317D0 /* CoinsInfoListHeaderViewModel.swift in Sources */,
 				385B260028A35E8700F14061 /* CoinsInfoListView.swift in Sources */,
 				385B25F428A2E03100F14061 /* Constants.swift in Sources */,
-				38A5088C28A38BB8008B936F /* CoinsInfoListHeaderFooterView.swift in Sources */,
+				38A5088C28A38BB8008B936F /* CoinsInfoListHeaderView.swift in Sources */,
 				385B260F28A3625400F14061 /* CoinInfoCellViewModel.swift in Sources */,
 				385B25EF28A2DB1000F14061 /* NetworkService.swift in Sources */,
 				385B25F128A2DD2000F14061 /* Coin.swift in Sources */,

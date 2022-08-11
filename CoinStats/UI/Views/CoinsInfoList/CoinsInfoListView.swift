@@ -54,6 +54,9 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellViewModels = viewModel?.coinInfoCellsViewModels.value,
+              // This row of logic is needed for avoiding crashes,
+              // when search input and data update are mixing together very fast
+              cellViewModels.count > indexPath.row,
               let cell = tableView.dequeueReusableCell(withIdentifier: CoinInfoTableViewCell.reuseIdentifier, for: indexPath) as? CoinInfoTableViewCell  else {
             return UITableViewCell()
         }
@@ -62,18 +65,14 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return (viewModel?.coinInfoCellsViewModels.value == nil) ? nil : tableView.dequeueReusableHeaderFooterView(withIdentifier: CoinsInfoListHeaderFooterView.reusieIdentifier)
-    }
-    
     // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.bounds.width * (51 / 343)
+        return 60
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.bounds.width * (1 / 8)
+        return 50
     }
     
     // MARK: - Private API
@@ -92,9 +91,17 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
 
         viewModel
             .coinInfoCellsViewModels
-            .observe(on: MainScheduler.asyncInstance)
-            .subscribe { [weak self] (rank) in
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] (_) in
                 self?.tableView.reloadData()
+            }
+            .disposed(by: reusableBag)
+        
+        viewModel
+            .headerFooterViewModel
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe { [weak self] (headerViewModel) in
+                (self?.tableView.tableHeaderView as? CoinsInfoListHeaderView)?.setupViewModel(headerViewModel)
             }
             .disposed(by: reusableBag)
     }
@@ -103,6 +110,11 @@ class CoinsInfoListView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: CoinInfoTableViewCell.nibFileName, bundle: nil), forCellReuseIdentifier: CoinInfoTableViewCell.reuseIdentifier)
-        tableView.register(UINib(nibName: CoinsInfoListHeaderFooterView.nibFileName, bundle: nil), forHeaderFooterViewReuseIdentifier: CoinsInfoListHeaderFooterView.reusieIdentifier)
+        
+        // Setting header view
+        let header  = CoinsInfoListHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let viewModel = viewModel?.headerFooterViewModel.value
+        header.setupViewModel(viewModel)
+        tableView.tableHeaderView = header
     }
 }

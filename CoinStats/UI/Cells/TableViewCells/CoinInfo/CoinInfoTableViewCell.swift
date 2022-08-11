@@ -118,6 +118,21 @@ class CoinInfoTableViewCell: UITableViewCell {
             .map({ UIColor(named: $0.rawValue) })
             .bind(to: priceChange24HLabel.rx.textColor)
             .disposed(by: reusableBag)
+        
+        Observable
+            .combineLatest(
+                viewModel.middleViewSubviewsBGColorName.compactMap({ $0 }),
+                viewModel.arrowImageName.compactMap({ $0 })
+            )
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe { [weak self] (colorName, imageName) in
+                guard let color = UIColor(named: colorName.rawValue) else {
+                    return
+                }
+                
+                self?.priceChange24HIconImageView.image = UIImage(named: imageName.rawValue)?.sd_tintedImage(with: color)
+            }
+            .disposed(by: reusableBag)
     }
     
     private func configureCornerRadiuses() {

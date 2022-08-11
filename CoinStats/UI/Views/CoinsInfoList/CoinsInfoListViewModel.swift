@@ -20,14 +20,17 @@ class CoinsInfoListViewModel {
     let isLoading = BehaviorRelay<Bool>(value: false)
     let coinInfoCellsViewModels = BehaviorRelay<[CoinInfoCellViewModel]?>(value: nil)
     let error = BehaviorRelay<Error?>(value: nil)
+    let headerFooterViewModel = BehaviorRelay<CoinsInfoListHeaderViewModel>(value: CoinsInfoListHeaderViewModel())
     
     // MARK: - Private Properties
     
     private let bag = DisposeBag()
     private var cellViewModelsReuseableBug = DisposeBag()
+    private var headerFooterViewModelReusableBag = DisposeBag()
     private var updateDataTimer: Timer?
     private let coinsData = BehaviorRelay<[Coin]?>(value: nil)
-    
+    private let priceSortingUp = BehaviorRelay<Bool>(value: false)
+
     // MARK: - Initializers
     
     init() {
@@ -45,28 +48,44 @@ class CoinsInfoListViewModel {
             .disposed(by: bag)
         
         Observable
-            .combineLatest(coinsData.compactMap({$0}), searchPhrase.observe(on: SerialDispatchQueueScheduler(qos: .default)))
-            .map({ [weak self] (coins, searchPhrase) in
+            .combineLatest(
+                coinsData.compactMap({$0}),
+                searchPhrase.observe(on: SerialDispatchQueueScheduler(qos: .default)),
+                priceSortingUp.observe(on: SerialDispatchQueueScheduler(qos: .default)),
+                priceType.observe(on: SerialDispatchQueueScheduler(qos: .default))
+            )
+            .map({ [weak self] (coins, searchPhrase, priceSortingUp, priceType) in
                 guard let strongSelf = self else {
                     return nil
                 }
                 
                 let filteredCoins = strongSelf.getFilteredCoins(allCoins: coins, searchPhrase: searchPhrase)
-                return filteredCoins.map({ CoinInfoCellViewModel(with: $0) })
+                
+                let sortedCoins = filteredCoins.sorted(by: { (first, second) in
+                    switch (priceType) {
+                        case .usd:
+                        return priceSortingUp ? first.priceInUsd > second.priceInUsd : first.priceInUsd < second.priceInUsd
+                        
+                        case .btc:
+                        return priceSortingUp ? first.priceInBtc > second.priceInBtc : first.priceInBtc < second.priceInBtc
+                    }
+                })
+                
+                return sortedCoins.map({ CoinInfoCellViewModel(with: $0) })
             })
             .compactMap({ $0 })
             .bind(to: coinInfoCellsViewModels)
             .disposed(by: bag)
         
-        coinsData
-            .compactMap({ $0 })
-            .map({ $0.map({ CoinInfoCellViewModel(with: $0) }) })
-            .bind(to: coinInfoCellsViewModels)
+        coinInfoCellsViewModels
+            .subscribe(onNext: { [weak self] (_) in
+                self?.resetCellViewModelsBindings()
+            })
             .disposed(by: bag)
         
-        coinInfoCellsViewModels
-            .subscribe(onNext: { [weak self] (viewModels) in
-                self?.resetCellViewModelsBindings()
+        headerFooterViewModel
+            .subscribe(onNext: { [weak self] (_) in
+                self?.resetHeaderFooterViewModelBindings()
             })
             .disposed(by: bag)
     }
@@ -106,6 +125,8 @@ class CoinsInfoListViewModel {
                     onError: { [weak self] (error) in
                         self?.error.accept(error)
                         self?.isLoading.accept(false)
+                        // This is the place to reset the data updater timer
+                        self?.setupUpdateDataTimer()
                     }
                 )
                 .disposed(by: bag)
@@ -113,7 +134,8 @@ class CoinsInfoListViewModel {
     }
     
     private func setupUpdateDataTimer() {
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
+        updateDataTimer?.invalidate()
+        updateDataTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
             self?.updateDataHandler()
         }
     }
@@ -124,7 +146,7 @@ class CoinsInfoListViewModel {
             return allCoins
         }
         
-        return allCoins.filter({ $0.name.contains(searchPhrase) })
+        return allCoins.filter({ $0.name.lowercased().contains(searchPhrase.lowercased()) || $0.symbol.lowercased().contains(searchPhrase.lowercased()) })
     }
     
     private func resetCellViewModelsBindings() {
@@ -139,5 +161,15 @@ class CoinsInfoListViewModel {
                 .bind(to: cellViewModelter.priceType)
                 .disposed(by: cellViewModelsReuseableBug)
         }
+    }
+    
+    private func resetHeaderFooterViewModelBindings() {
+        headerFooterViewModelReusableBag = DisposeBag()
+        
+        headerFooterViewModel
+            .value
+            .priceSortingIsUp
+            .bind(to: priceSortingUp)
+            .disposed(by: headerFooterViewModelReusableBag)
     }
 }

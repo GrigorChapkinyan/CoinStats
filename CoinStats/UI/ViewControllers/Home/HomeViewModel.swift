@@ -75,6 +75,14 @@ class HomeViewModel {
         coinsInfoListViewModel
             .value
             .isLoading
+            .filter({ [weak self] (isLoading) in
+                if (isLoading) {
+                    return (self?.coinsInfoListViewModel.value.coinInfoCellsViewModels.value == nil)
+                }
+                else {
+                    return (self?.isLoading.value == true)
+                }
+            })
             .bind(to: isLoading)
             .disposed(by: coinsInfoListViewModelReusableBag)
         
