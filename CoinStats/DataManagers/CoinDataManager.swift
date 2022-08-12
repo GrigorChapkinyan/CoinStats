@@ -55,8 +55,8 @@ class CoinDataManager {
                 .observe(on: SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                     onNext: { (networkResponse) in
-                        guard let data = strongSelf.parseDictionary(from: networkResponse),
-                              let coins = strongSelf.parseCoins(from: data, with: nil) else {
+                        guard let dict = strongSelf.parseDictionary(from: networkResponse),
+                              let coins = strongSelf.parseCoins(from: dict) else {
                             observer.onError(Error.parsing)
                             return
                         }
@@ -75,7 +75,7 @@ class CoinDataManager {
         .observe(on: MainScheduler.asyncInstance)
     }
     
-    func fetchAndUpdateAllCoinsData(with previousCoins: [Coin]) -> Observable<[Coin]> {
+    func fetchAndUpdateAllCoinsData(with previousCoins: [Coin]) -> Observable<Void> {
         return Observable.create { [weak self] (observer) -> Disposable in
             guard let strongSelf = self else {
                 observer.onError(Error.unknown)
@@ -92,13 +92,12 @@ class CoinDataManager {
                 .observe(on: SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                     onNext: { (networkResponse) in
-                        guard let data = strongSelf.parseDictionary(from: networkResponse),
-                              let coins = strongSelf.parseCoins(from: data, with: previousCoins) else {
+                        guard let dict = strongSelf.parseDictionary(from: networkResponse),
+                              strongSelf.updateCoins(from: dict, with: previousCoins) else {
                             observer.onError(Error.parsing)
                             return
                         }
                         
-                        observer.onNext(coins)
                         observer.onCompleted()
                     },
                     onError: { (error) in
@@ -139,44 +138,43 @@ class CoinDataManager {
         return dict
     }
     
-    private func parseCoins(from initialDataDict: [AnyHashable : Any], with previousCoins: [Coin]?) -> [Coin]? {
+    private func parseCoins(from dictionary:[AnyHashable:Any]) -> [Coin]? {
         // Getting nested main dictionaries array
-        guard  let arrayToDecode = initialDataDict[Constants.HttpBodyKeys.coins.rawValue] as? [Any] else {
+        guard  let dictionaryArrayToDecode = dictionary[Constants.HttpBodyKeys.coins.rawValue] as? [[AnyHashable : Any]] else {
             return nil
         }
              
-        var retVal: [Coin]? = nil
-        
-        // Checking if the previous coins array was passed,
-        // to parse objects with correct way
-        if let previousCoins = previousCoins {
-            let items = arrayToDecode.compactMap({ $0 as? [Any] }).compactMap({ Coin(from: $0, and: previousCoins) })
-            if (!items.isEmpty) {
-                retVal = items
-            }
-        }
-        // Otherwise the fetched dictionary must be correctly serialized to JSON data object after object,
-        // because there can be fetched NOT CORRECT objects from API
-        else {
-            let dictionaryArrayToDecode = arrayToDecode.compactMap({ $0 as? [AnyHashable : Any] })
-            var itemsToAppend = [Coin]()
-            
-            for dictIter in dictionaryArrayToDecode {
-                if let data = try? JSONSerialization.data(withJSONObject: dictIter,options: .prettyPrinted) {
-                    do {
-                        itemsToAppend.append(try JSONDecoder().decode(Coin.self, from: data))
-                    }
-                    catch {
-                        print("Error while parsing: \(error).")
-                    }
+        var retVal = [Coin]()
+
+        // Iterating trough each dictionary and parsing,
+        // becuase there can be single objects
+        // which parsing may be completed with failure
+        for dictIter in dictionaryArrayToDecode {
+            if let data = try? JSONSerialization.data(withJSONObject: dictIter,options: .prettyPrinted) {
+                do {
+                    retVal.append(try JSONDecoder().decode(Coin.self, from: data))
                 }
-            }
-            
-            if (!itemsToAppend.isEmpty) {
-                retVal = itemsToAppend
+                catch {
+                    print("Error while parsing: \(error).")
+                }
             }
         }
         
         return retVal
+    }
+    
+    private func updateCoins(from updatedDataDict: [AnyHashable : Any], with previousCoins: [Coin]) -> Bool {
+        // Getting nested main array
+        guard  let arrayOfUpdatedData = updatedDataDict[Constants.HttpBodyKeys.coins.rawValue] as? [[Any]] else {
+            return false
+        }
+             
+        // Iterating trough each coin,
+        // And updating the price
+        for (i,_) in previousCoins.enumerated() {
+            previousCoins[i].updatePrice(from: arrayOfUpdatedData)
+        }
+        
+        return true
     }
 }

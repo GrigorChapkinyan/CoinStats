@@ -127,6 +127,12 @@
                             <constraint firstItem="w88-UU-nSU" firstAttribute="centerY" secondItem="gbS-5W-fuy" secondAttribute="centerY" id="s13-hq-M9O"/>
                         </constraints>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="customIcon" translatesAutoresizingMaskIntoConstraints="NO" id="67Z-by-Qdc">
+                        <rect key="frame" x="99" y="17.5" width="14" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="67Z-by-Qdc" secondAttribute="height" multiplier="1:1" id="5Dg-Xc-EDd"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Vy-lC-4gR">
                         <rect key="frame" x="170" y="8.5" width="73" height="32"/>
                         <subviews>
@@ -149,15 +155,22 @@
                                         <color key="textColor" name="darkGreen"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="customIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-i6-qhm">
+                                        <rect key="frame" x="39.5" y="9" width="13.5" height="14"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="kp1-i6-qhm" firstAttribute="centerX" secondItem="Pm6-PR-91D" secondAttribute="centerX" multiplier="1.3" id="0o8-IV-xZW"/>
                                     <constraint firstItem="Pm6-PR-91D" firstAttribute="leading" secondItem="eT8-ms-cG8" secondAttribute="trailing" constant="3" id="EGQ-h6-wDF"/>
                                     <constraint firstItem="Pm6-PR-91D" firstAttribute="top" secondItem="IfR-CF-grb" secondAttribute="top" constant="8" id="PNM-us-lNA"/>
                                     <constraint firstAttribute="trailing" secondItem="Pm6-PR-91D" secondAttribute="trailing" id="Q6a-gp-P8a"/>
                                     <constraint firstItem="eT8-ms-cG8" firstAttribute="leading" secondItem="IfR-CF-grb" secondAttribute="leading" id="S9M-gy-yie"/>
+                                    <constraint firstItem="kp1-i6-qhm" firstAttribute="centerY" secondItem="Pm6-PR-91D" secondAttribute="centerY" id="Y8p-fo-L3K"/>
                                     <constraint firstAttribute="bottom" secondItem="Pm6-PR-91D" secondAttribute="bottom" constant="8" id="gAO-kh-laY"/>
                                     <constraint firstItem="Pm6-PR-91D" firstAttribute="centerY" secondItem="IfR-CF-grb" secondAttribute="centerY" id="kzy-1h-oQG"/>
+                                    <constraint firstItem="kp1-i6-qhm" firstAttribute="width" secondItem="kp1-i6-qhm" secondAttribute="height" multiplier="1:1" id="mG6-88-JdZ"/>
+                                    <constraint firstItem="kp1-i6-qhm" firstAttribute="height" secondItem="Pm6-PR-91D" secondAttribute="height" multiplier="0.85" id="tmB-3Q-3Ep"/>
                                     <constraint firstItem="eT8-ms-cG8" firstAttribute="centerY" secondItem="IfR-CF-grb" secondAttribute="centerY" id="yh9-hT-YxQ"/>
                                 </constraints>
                             </view>
@@ -180,13 +193,16 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="67Z-by-Qdc" firstAttribute="leading" secondItem="gbS-5W-fuy" secondAttribute="trailing" constant="8" id="0Ed-hM-BNS"/>
                     <constraint firstItem="yaY-oy-3Zh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5f0-WU-JeU"/>
+                    <constraint firstItem="67Z-by-Qdc" firstAttribute="centerY" secondItem="kp1-i6-qhm" secondAttribute="centerY" id="NCb-Zp-FDJ"/>
                     <constraint firstItem="gbS-5W-fuy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="PAK-BY-sQ9"/>
                     <constraint firstAttribute="trailing" secondItem="yaY-oy-3Zh" secondAttribute="trailing" id="R3G-h7-WMO"/>
                     <constraint firstAttribute="bottom" secondItem="gbS-5W-fuy" secondAttribute="bottom" constant="5" id="VNR-x5-gNO"/>
-                    <constraint firstItem="1Vy-lC-4gR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gbS-5W-fuy" secondAttribute="trailing" constant="20" id="ai6-YB-wnu"/>
+                    <constraint firstItem="1Vy-lC-4gR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="67Z-by-Qdc" secondAttribute="trailing" constant="8" id="ai6-YB-wnu"/>
                     <constraint firstItem="gbS-5W-fuy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bNc-am-wP7"/>
                     <constraint firstItem="1Vy-lC-4gR" firstAttribute="centerY" secondItem="gbS-5W-fuy" secondAttribute="centerY" id="cU8-a6-bAJ"/>
+                    <constraint firstItem="67Z-by-Qdc" firstAttribute="height" secondItem="kp1-i6-qhm" secondAttribute="height" id="lC2-t7-4TS"/>
                     <constraint firstItem="gbS-5W-fuy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oWp-St-Mig"/>
                     <constraint firstItem="1Vy-lC-4gR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="centerX" multiplier="1.015" id="onV-po-1Hv"/>
                     <constraint firstItem="yaY-oy-3Zh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Vy-lC-4gR" secondAttribute="trailing" constant="20" id="puO-Bn-XiA"/>
@@ -209,6 +225,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="customIcon" width="0.5" height="0.5"/>
         <namedColor name="darkGreen">
             <color red="0.20000001788139343" green="0.69999998807907104" blue="0.28999999165534973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

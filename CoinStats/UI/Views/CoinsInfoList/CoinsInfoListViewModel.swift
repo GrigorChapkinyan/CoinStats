@@ -98,12 +98,13 @@ class CoinsInfoListViewModel {
                 .shared
                 .fetchAndUpdateAllCoinsData(with: initialCoins)
                 .subscribe(
-                    onNext: { [weak self] (coins) in
-                        self?.coinsData.accept(coins)
-                        self?.isLoading.accept(false)
-                    },
                     onError: { [weak self] (error) in
                         self?.error.accept(error)
+                        self?.isLoading.accept(false)
+                    },
+                    onCompleted: { [weak self] in
+                        let updatedVal = self?.coinsData.value
+                        self?.coinsData.accept(updatedVal)
                         self?.isLoading.accept(false)
                     }
                 )
